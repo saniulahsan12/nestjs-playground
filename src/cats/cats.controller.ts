@@ -48,7 +48,10 @@ export class CatsController {
 
   @Get(':id')
   async getCat(@Param('id') id: number): Promise<CatDTO | NotFoundException> {
-    const singleCat = await this.catsRepository.findOne({ id: id });
+    const singleCat = await this.catsRepository.findOne({
+      where: { id: id },
+      relations: ['user'],
+    });
     if (!singleCat) {
       return new NotFoundException();
     }
