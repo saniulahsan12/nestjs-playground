@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+} from 'typeorm';
 import { Cats } from '../cats/cat.entity';
 @Entity()
 export class Users {
@@ -10,6 +16,12 @@ export class Users {
 
   @Column()
   password: string;
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  public createdAt: Date;
 
   @OneToMany(() => Cats, (cat) => cat.user)
   cats: Cats[];

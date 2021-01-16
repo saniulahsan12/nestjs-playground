@@ -10,7 +10,6 @@ import {
   Post,
   Delete,
   UseGuards,
-  Request,
   Req,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -18,7 +17,6 @@ import {
 import { Cats } from './cat.entity';
 
 import { CatDTO } from './dto/cat.dto';
-import { UserDTO } from '../users/dto/user.dto';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
@@ -86,7 +84,6 @@ export class CatsController {
       where: { id: id },
       relations: ['user'],
     });
-    
     if (!existingCat) {
       return new NotFoundException();
     }
