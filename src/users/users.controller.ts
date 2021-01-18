@@ -15,7 +15,7 @@ export class UsersController {
   ) {}
 
   @Post('/add')
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   async addCat(@Body() userDto: UserDTO): Promise<Users | InsertResult> {
     userDto.password = await bcrypt.hash(
       userDto.password,
