@@ -1,4 +1,4 @@
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -30,5 +30,10 @@ export class Users {
 
   constructor(partial: Partial<Users>) {
     Object.assign(this, partial);
+  }
+
+  @Expose()
+  get junctionUser(): string {
+    return `${this.id} | ${this.username}`;
   }
 }
