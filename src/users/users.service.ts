@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Users } from './user.entity';
-
+import { Cron } from '@nestjs/schedule';
 // This should be a real class/interface representing a user entity
 @Injectable()
 export class UsersService {
@@ -27,5 +27,10 @@ export class UsersService {
 
   async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);
+  }
+
+  @Cron('* 10 * * * *')
+  handleCronService() {
+    console.log('Called every second...from service');
   }
 }

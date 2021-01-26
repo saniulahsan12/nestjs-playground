@@ -1,7 +1,10 @@
-import { Users } from './users/user.entity';
-import { Cats } from './cats/cat.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
+
+import { Users } from './users/user.entity';
+import { Cats } from './cats/cat.entity';
+
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -21,6 +24,7 @@ import { UsersModule } from './users/users.module';
       entities: [Cats, Users],
       synchronize: true,
     }),
+    ScheduleModule.forRoot(),
     CatsModule,
     AuthModule,
     UsersModule,

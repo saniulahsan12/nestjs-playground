@@ -6,6 +6,7 @@ import { Users } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { hashConstants } from '../auth/constants';
 import { ClassSerializerInterceptor } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 
 @Controller('users')
 export class UsersController {
@@ -28,5 +29,10 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   async getUsers(): Promise<UserDTO[]> {
     return await this.usersRepository.find();
+  }
+
+  @Cron('* 10 * * * *')
+  handleCronController() {
+    console.log('Called every second... from controller');
   }
 }
