@@ -12,6 +12,7 @@ import {
   UseGuards,
   Req,
   UnauthorizedException,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import { Cats } from './cat.entity';
@@ -19,8 +20,10 @@ import { Cats } from './cat.entity';
 import { CatDTO } from './dto/cat.dto';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ClassSerializerInterceptor } from '@nestjs/common/serializer';
 
 @Controller('cats')
+@UseInterceptors(ClassSerializerInterceptor)
 export class CatsController {
   constructor(
     @InjectRepository(Cats)
