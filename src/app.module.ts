@@ -12,6 +12,9 @@ import { CatsModule } from './cats/cats.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 
+import { MongooseModule } from '@nestjs/mongoose';
+import { LogsModule } from './logs/logs.module';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -24,10 +27,14 @@ import { UsersModule } from './users/users.module';
       entities: [Cats, Users],
       synchronize: true,
     }),
+    MongooseModule.forRoot('mongodb://localhost/nest_playground', {
+      useNewUrlParser: true,
+    }),
     ScheduleModule.forRoot(),
     CatsModule,
     AuthModule,
     UsersModule,
+    LogsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
