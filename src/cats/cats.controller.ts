@@ -21,6 +21,7 @@ import { CatDTO } from './dto/cat.dto';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ClassSerializerInterceptor } from '@nestjs/common/serializer';
+import { ApiBearerAuth, ApiHeader } from '@nestjs/swagger';
 
 @Controller('cats')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -68,6 +69,7 @@ export class CatsController {
   }
 
   @Post('/')
+  @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   async addCat(@Req() req, @Body() catDto: CatDTO): Promise<Cats> {
     const cat = new Cats();

@@ -15,6 +15,11 @@ import { LogsService } from './logs.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { DeleteResult } from 'typeorm';
 import { ObjectId } from 'mongoose';
+import {
+  ApiBadGatewayResponse,
+  ApiOkResponse,
+  ApiParam,
+} from '@nestjs/swagger';
 
 @Controller('logs')
 export class LogsController {
@@ -25,6 +30,15 @@ export class LogsController {
     return this.logsService.findAll();
   }
 
+  @ApiParam({ name: 'id' })
+  @ApiBadGatewayResponse({
+    status: 400,
+    description: 'There is a error in the response',
+  })
+  @ApiOkResponse({
+    status: 201,
+    description: 'The record has been successfully created.',
+  })
   @Get(':id')
   findOne(@Param('id') id: ObjectId): Promise<Log> {
     return this.logsService.findOne(id);
@@ -45,6 +59,7 @@ export class LogsController {
 
   @Post('/update/:id')
   @UseGuards(JwtAuthGuard)
+  @ApiParam({ name: 'id' })
   updateLog(
     @Param('id') id: ObjectId,
     @Body() updateLogDto: UpdateLogDto,
@@ -53,6 +68,7 @@ export class LogsController {
   }
 
   @Delete('/delete/:id')
+  @ApiParam({ name: 'id' })
   @UseGuards(JwtAuthGuard)
   deleteLog(@Param('id') id: ObjectId): Promise<DeleteResult> {
     return this.logsService.delete(id);

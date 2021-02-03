@@ -10,6 +10,10 @@ async function bootstrap() {
     .setTitle('NestJS Playground')
     .setDescription('NestJS Playground API description')
     .setVersion('1.0')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'access-token',
+    )
     // .addTag('NestJS')
     // .addTag('MySQL')
     // .addTag('MongoDB')

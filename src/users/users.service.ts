@@ -29,7 +29,7 @@ export class UsersService {
     await this.usersRepository.delete(id);
   }
 
-  @Cron('* 10 * * * *')
+  @Cron('* * * * * 5')
   handleCronService() {
     console.log('Called every second...from service');
   }

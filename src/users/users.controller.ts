@@ -31,8 +31,8 @@ export class UsersController {
     return await this.usersRepository.find();
   }
 
-  @Cron('* 10 * * * *')
+  @Cron('* * * * * 5')
   handleCronController() {
-    console.log('Called every second... from controller');
+    console.log('Called every second... from controller...');
   }
 }

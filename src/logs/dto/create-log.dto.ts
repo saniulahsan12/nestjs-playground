@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsNumber,
@@ -9,6 +10,7 @@ import {
 export class CreateLogDto {
   @IsString()
   @IsNotEmpty()
+  @ApiProperty()
   name: string;
 
   @IsDate()
@@ -29,5 +31,6 @@ export class CreateLogDto {
 
   @IsString()
   @IsNotEmpty()
+  @ApiProperty()
   message: string;
 }
