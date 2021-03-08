@@ -21,13 +21,37 @@ import {
   ApiParam,
 } from '@nestjs/swagger';
 
+import * as couchbase from 'couchbase';
+
 @Controller('logs')
 export class LogsController {
   constructor(private readonly logsService: LogsService) {}
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.logsService.findAll();
+  }
+
+  @Get('/couchbase')
+  async findAllCouchbase() {
+
+    const cluster = await couchbase.connect("couchbase://localhost", {
+      username: "recipe_user",
+      password: "recipe_user",
+    });
+    const bucket = cluster.bucket("travel-sample");
+    const scope = bucket.scope("inventory");
+    const collection = scope.collection("airport");
+
+    // const collection = bucket.defaultCollection();
+    // return await collection.get("user:king_luther");
+
+    // const resultCol = await cluster.query('SELECT * FROM `travel-sample` route order by id desc limit 100');
+    // const resultCol = await cluster.query('SELECT DISTINCT route.destinationairport FROM `travel-sample` airport JOIN `travel-sample` route ON airport.faa = route.sourceairport AND route.type = "route" WHERE airport.type = "airport" AND airport.city = "San Francisco" AND airport.country = "United States";');
+    // return resultCol.rows;
+
+    const result = await collection.get('airport_1254');
+    return result;
   }
 
   @ApiParam({ name: 'id' })
